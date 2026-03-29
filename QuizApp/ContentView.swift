@@ -8,16 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var phase: QuizPhase = .start
+    @State private var finalScore: Int = 0
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            switch phase {
+            case .start:
+                QuizStartView(phase: $phase)
+            case .quiz:
+                QuizView(phase: $phase, finalScore: $finalScore)
+            case .result:
+                ResultView(score: finalScore, total: Question.allQuestions.count, phase: $phase)
+            }
         }
-        .padding()
     }
 }
+
 
 #Preview {
     ContentView()
