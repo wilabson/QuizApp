@@ -11,7 +11,7 @@ struct QuizStartView: View {
     @Binding var phase: QuizPhase
     
     var body: some View {
-        VStack {
+        VStack(spacing: 24) {
                 Image("AppLogo")
                 
                 Text("Drink Quiz")
@@ -23,7 +23,13 @@ struct QuizStartView: View {
                     Image(systemName: "play.fill")
                     Text("Start")
                 }
-                .buttonStyle(.borderedProminent)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .font(.title3.bold())
+                .background(.green)
+                .foregroundStyle(.white)
+                .cornerRadius(12)
+                .shadow(radius: 4)
                 
                 Button {
                     
@@ -31,7 +37,13 @@ struct QuizStartView: View {
                     Image(systemName: "info.circle.fill")
                     Text("About Us")
                 }
-                .buttonStyle(.borderedProminent)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .font(.title3.bold())
+                .background(.green)
+                .foregroundStyle(.white)
+                .cornerRadius(12)
+                .shadow(radius: 4)
         }
         .padding()
     }
