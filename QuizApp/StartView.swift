@@ -9,9 +9,31 @@ import SwiftUI
 
 struct QuizStartView: View {
     @Binding var phase: QuizPhase
-
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+                Image("AppLogo")
+                
+                Text("Drink Quiz")
+                    .font(.largeTitle.bold())
+                
+                Button {
+                    
+                } label: {
+                    Image(systemName: "play.fill")
+                    Text("Start")
+                }
+                .buttonStyle(.borderedProminent)
+                
+                Button {
+                    
+                } label: {
+                    Image(systemName: "info.circle.fill")
+                    Text("About Us")
+                }
+                .buttonStyle(.borderedProminent)
+        }
+        .padding()
     }
 }
 
