@@ -11,41 +11,51 @@ struct QuizStartView: View {
     @Binding var phase: QuizPhase
     
     var body: some View {
-        VStack(spacing: 24) {
+        VStack {
+            Group {
                 Image("AppLogo")
+                    .resizable()
+                    .frame(width: 200, height: 200)
                 
                 Text("Drink Quiz")
                     .font(.largeTitle.bold())
+                    .padding(.bottom, 60)
+            }
+            .padding(.top, 24)
                 
-                Button {
+                VStack (spacing: 24){
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "play.fill")
+                        Text("Start")
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .font(.title3.bold())
+                    .background(.green)
+                    .foregroundStyle(.white)
+                    .cornerRadius(12)
+                    .shadow(radius: 4)
                     
-                } label: {
-                    Image(systemName: "play.fill")
-                    Text("Start")
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .font(.title3.bold())
-                .background(.green)
-                .foregroundStyle(.white)
-                .cornerRadius(12)
-                .shadow(radius: 4)
-                
-                Button {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "info.circle.fill")
+                        Text("About Us")
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .font(.title3.bold())
+                    .background(.green)
+                    .foregroundStyle(.white)
+                    .cornerRadius(12)
+                    .shadow(radius: 4)
                     
-                } label: {
-                    Image(systemName: "info.circle.fill")
-                    Text("About Us")
+                    Spacer()
                 }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .font(.title3.bold())
-                .background(.green)
-                .foregroundStyle(.white)
-                .cornerRadius(12)
-                .shadow(radius: 4)
+                .padding(.horizontal, 100)
         }
-        .padding()
     }
 }
 
