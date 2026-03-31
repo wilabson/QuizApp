@@ -13,22 +13,31 @@ struct QuizView: View {
     @Binding var phase: QuizPhase
     @Binding var finalScore: Int
     
-    @State private var questionIndex: Int = 1
+    @State private var questionIndex: Int = 8
     @State private var score: Int = 0
     @State private var selectedIndex: Int? = nil
+    @State private var questionsAsked: Int = 1
     
+    private let maxQuestions: Int = 12
     private let questions = Question.allQuestions
-    private var currentQuestion: Question { questions[questionIndex] }
+    private var currentQuestion: Question { questions[questionIndex]
+        
+    }
     
 
     var body: some View {
             ScrollView {
                 VStack (spacing: 20){
+                    HStack {
+                        Text("Fråga \(questionsAsked) av \(maxQuestions)")
+                        Spacer()
+                        Text("Rätt svar: \(score)")
+                    } // end HStack Topp
                     Text(currentQuestion.questionText)
                         .font(.title2)
                         .bold()
                         .padding(10)
-                } // end VStack
+                } // end VStack top
                 VStack (alignment: .leading, spacing: 20){
 
                         ForEach(currentQuestion.options.indices, id: \.self) { index in
@@ -36,6 +45,15 @@ struct QuizView: View {
                                 self.selectedIndex = index
                                 if index == currentQuestion.correctIndex {
                                     self.score += 1
+                                }
+                                if questionsAsked < maxQuestions {
+                                    selectedIndex = nil
+                                    questionIndex += 1
+                                    questionsAsked += 1
+                                }
+                                else {
+                                    finalScore = score
+                                    phase = .result
                                 }
                             }) {
                                 HStack{
@@ -58,8 +76,10 @@ struct QuizView: View {
                                 .padding(10)
 
                             }
+                            .disabled(selectedIndex != nil) //gör att man bara kan svara en gång
+                            .animation(.easeInOut(duration: 0.3), value: selectedIndex)
                         }
-                    } // end VStack
+                    } // end VStack questions
                     
                 }
             .padding(20)
