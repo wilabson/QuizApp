@@ -13,7 +13,7 @@ struct QuizView: View {
     @Binding var phase: QuizPhase
     @Binding var finalScore: Int
     
-    @State private var questionIndex: Int = 8
+    @State private var questionIndex: Int = Int.random(in: 0..<(Question.allQuestions.count - 12))
     @State private var score: Int = 0
     @State private var selectedIndex: Int? = nil
     @State private var questionsAsked: Int = 1
@@ -47,7 +47,6 @@ struct QuizView: View {
                                     self.score += 1
                                 }
                                 if questionsAsked < maxQuestions {
-                                    selectedIndex = nil
                                     questionIndex += 1
                                     questionsAsked += 1
                                 }
@@ -79,7 +78,32 @@ struct QuizView: View {
                             .disabled(selectedIndex != nil) //gör att man bara kan svara en gång
                             .animation(.easeInOut(duration: 0.3), value: selectedIndex)
                         }
+                    // nästa fråga knapp
+                    if selectedIndex != nil {
+                        Button {
+                            if questionsAsked < maxQuestions {
+                                selectedIndex = nil
+                                questionIndex += 1
+                                questionsAsked += 1
+                            } else {
+                                finalScore = score
+                                phase = .result
+                            }
+                        } label: {
+                            Text(questionsAsked < maxQuestions ? "Nästa fråga" : "Se ditt resultat")
+                                .font(.title2)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.purple.opacity(0.9))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 10)
+                                
+                        }
+
+                    }
                     } // end VStack questions
+                
                     
                 }
             .padding(20)
