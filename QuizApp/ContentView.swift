@@ -16,6 +16,7 @@ struct ContentView: View {
             switch phase {
             case .start:
                 QuizStartView(phase: $phase)
+                    .transition(.scale)
             case .quiz:
                 QuizView(phase: $phase, finalScore: $finalScore)
             case .result:
