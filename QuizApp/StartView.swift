@@ -24,6 +24,13 @@ struct QuizStartView: View {
             .padding(.top, 24)
                 
                 VStack (spacing: 24){
+                    
+                    let logoGradient = LinearGradient(
+                        colors: [
+                            Color(red: 1.0, green: 0.7, blue: 0.2),
+                            Color(red: 0.95, green: 0.1, blue: 0.35)
+                        ], startPoint: .top, endPoint: .bottom)
+                    
                     Button {
                         
                     } label: {
@@ -33,7 +40,7 @@ struct QuizStartView: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .font(.title3.bold())
-                    .background(.green)
+                    .background(logoGradient)
                     .foregroundStyle(.white)
                     .cornerRadius(12)
                     .shadow(radius: 4)
