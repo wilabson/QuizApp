@@ -22,44 +22,57 @@ struct QuizStartView: View {
                     .padding(.bottom, 60)
             }
             .padding(.top, 24)
+            
+            VStack (spacing: 24){
                 
-                VStack (spacing: 24){
-                    
-                    Button {
-                        withAnimation {
-                            phase = .quiz
-                        }
-                    } label: {
-                        Image(systemName: "play.fill")
-                        Text("Start")
+                Button {
+                    withAnimation {
+                        phase = .quiz
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .font(.title3.bold())
-                    .background(ButtonGradient.logoGradient)
-                    .foregroundStyle(.white)
-                    .cornerRadius(12)
-                    .shadow(radius: 4)
-                    
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "info.circle.fill")
-                        Text("About Us")
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .font(.title3.bold())
-                    .background(.green)
-                    .foregroundStyle(.white)
-                    .cornerRadius(12)
-                    .shadow(radius: 4)
-                    
-                    Spacer()
+                } label: {
+                    Image(systemName: "play.fill")
+                    Text("Start")
                 }
-                .padding(.horizontal, 100)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .font(.title3.bold())
+                .background(ButtonGradient.logoGradient)
+                .foregroundStyle(.white)
+                .cornerRadius(12)
+                .shadow(radius: 4)
+                
+                Button {
+                    
+                } label: {
+                    Image(systemName: "info.circle.fill")
+                    Text("About Us")
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .font(.title3.bold())
+                .background(.ultraThinMaterial)
+                .foregroundStyle(.primary)
+                .cornerRadius(12)
+                .shadow(radius: 4)
+                
+                Spacer()
+            }
+            .padding(.horizontal, 100)
+            Text("Made by Group 5")
         }
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 1.0, green: 0.75, blue: 0.40),
+                    Color(red: 0.95, green: 0.20, blue: 0.45)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        
     }
+    
 }
 
 struct ButtonGradient {
