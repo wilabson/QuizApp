@@ -5,60 +5,104 @@ struct ResultView: View {
     let total: Int
     @Binding var phase: QuizPhase
 
+    private let quizTotal = 12
+
     var body: some View {
-        VStack(spacing: 30) {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(red: 1.0, green: 0.75, blue: 0.40),
+                    Color(red: 0.95, green: 0.20, blue: 0.45)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
 
-            if score == total {
-                // ⭐ Perfect
-                Text("Perfekt! 🎯")
-                    .font(.title2)
+            VStack(spacing: 24) {
+                Spacer()
+
+                Image(systemName: "checkmark.seal.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 85, height: 85)
+                    .foregroundStyle(.white.opacity(0.95))
+                    .shadow(radius: 6)
+
+                Text("Resultat")
+                    .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundColor(.green)
-                
-                Text("Skål! 🍻")
-                    .font(.headline)
+                    .foregroundColor(.black)
 
-                Text("Du vann en drink på huset! 🍹")
-                    .font(.headline)
-
-                Text("Besök bartendern och hämta din gratisdrink.")
-                    .font(.subheadline)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.secondary)
-
-            } else if score >= total / 2 {
-                // 👍 Good
-                Text("Bra jobbat! 🎉")
+                Text("Du fick \(score) av \(quizTotal)")
                     .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.green)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.black)
 
-            } else {
-                // ❌ Fail
-                Text("Försök igen! 🙂")
-                    .font(.title3)
-            }
+                if score == quizTotal {
 
-            // ✅ زر واحد فقط
-            if score != total {
-                Button(action: {
-                    phase = .start
-                }) {
-                    Text("Spela igen")
+                    Text("Skål! 🍻")
+                        .font(.headline)
+                        .foregroundColor(.black)
+
+                    Text("Du vann en drink på huset! 🍹")
+                        .font(.headline)
+                        .foregroundColor(.black)
+
+                    Text("Besök bartendern och hämta din gratisdrink.")
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 24)
+
+                } else if score >= quizTotal / 2 {
+                    Text("Snyggt jobbat! 👏")
                         .font(.title3)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black)
+
+                } else {
+                    Text("Bra! Försök igen 😊")
+                        .font(.title3)
+                        .fontWeight(.medium)
+                        .foregroundColor(.black)
                 }
-                .padding(.horizontal)
+
+                Button {
+                    phase = .start
+                } label: {
+                    Text("Spela igen")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: 220)
+                        .padding()
+                        .background(
+                            LinearGradient(
+                                colors: [
+                                    Color(red: 1.0, green: 0.7, blue: 0.2),
+                                    Color(red: 0.95, green: 0.1, blue: 0.35)
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .cornerRadius(14)
+                        .shadow(radius: 6)
+                }
+                .padding(.top, 12)
+
+                Spacer()
+
+                Text("Made by Group 5")
+                    .font(.footnote)
+                    .foregroundColor(.black.opacity(0.85))
+                    .padding(.bottom, 20)
             }
+            .padding()
         }
-        .padding()
     }
 }
 
 #Preview {
-    ResultView(score: 0, total: 1, phase: .constant(.result))
+    ResultView(score: 12, total: 12, phase: .constant(.result))
 }
