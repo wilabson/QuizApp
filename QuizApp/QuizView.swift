@@ -13,13 +13,13 @@ struct QuizView: View {
     @Binding var phase: QuizPhase
     @Binding var finalScore: Int
     
-    @State private var questionIndex: Int = Int.random(in: 0..<(Question.allQuestions.count - 13)) // TODO: Är inte jättenöjd med denna lösning
+    @State private var questionIndex: Int = Int.random(in: 0..<(Question.allQuestions.count - 8)) // TODO: Är inte jättenöjd med denna lösning
     @State private var score: Int = 0
     @State private var selectedIndex: Int? = nil
     @State private var questionsAsked: Int = 1
     @State private var anserdCorrectly: Bool? = nil
     
-    private let maxQuestions: Int = 13
+    private let maxQuestions: Int = 8
     private let questions = Question.allQuestions
     private var currentQuestion: Question { questions[questionIndex]}
 
@@ -62,14 +62,19 @@ struct QuizView: View {
                                 .padding(.horizontal, 30)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .foregroundStyle(Color.white)
+                                        .foregroundStyle(
+                                            selectedIndex == nil
+                                                ? Color.white
+                                            : (selectedIndex == index ? Color.white : Color.gray.opacity(0.1))
+                                        )
                                         .shadow(radius: 10)
+                                    
                                 )
                                 .padding(10)
 
                             }
                             .disabled(selectedIndex != nil) //gör att man bara kan svara en gång
-                            .animation(.easeInOut(duration: 0.3), value: selectedIndex)
+                            .animation(.easeInOut(duration: 1), value: selectedIndex)
                         }
                     // visa resultat
                     
@@ -77,20 +82,17 @@ struct QuizView: View {
                         Group {
                             if anserdCorrectly {
                                 Text("Snyggt! Nr. \(currentQuestion.correctIndex + 1) är rätt")
-                                    .font(.title2)
                                     .padding()
                                     .frame(maxWidth: .infinity)
                                     .background(Color.green.opacity(0.7))
-                            
                             } else {
-                                Text("Du svarade nr. \(selectedIndex! + 1) rätt svar var nr. \(currentQuestion.correctIndex + 1)")
-                                    .font(.title2)
+                                Text("Fel! Rätt svar var nr. \(currentQuestion.correctIndex + 1)")
                                     .padding()
                                     .frame(maxWidth: .infinity)
                                     .background(Color.red.opacity(0.7))
-
                             }
                         }
+                        .font(.title2)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                         .shadow(radius: 10)
