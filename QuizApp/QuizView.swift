@@ -13,17 +13,16 @@ struct QuizView: View {
     @Binding var phase: QuizPhase
     @Binding var finalScore: Int
     
-    @State private var questionIndex: Int = Int.random(in: 0..<(Question.allQuestions.count - 12))
+    @State private var questionIndex: Int = Int.random(in: 0..<(Question.allQuestions.count - 13)) // TODO: Är inte jättenöjd med denna lösning
     @State private var score: Int = 0
     @State private var selectedIndex: Int? = nil
     @State private var questionsAsked: Int = 1
+    @State private var anserdCorrectly: Bool? = nil
     
-    private let maxQuestions: Int = 12
+    private let maxQuestions: Int = 13
     private let questions = Question.allQuestions
-    private var currentQuestion: Question { questions[questionIndex]
-        
-    }
-    
+    private var currentQuestion: Question { questions[questionIndex]}
+
 
     var body: some View {
             ScrollView {
@@ -45,14 +44,9 @@ struct QuizView: View {
                                 self.selectedIndex = index
                                 if index == currentQuestion.correctIndex {
                                     self.score += 1
-                                }
-                                if questionsAsked < maxQuestions {
-                                    questionIndex += 1
-                                    questionsAsked += 1
-                                }
-                                else {
-                                    finalScore = score
-                                    phase = .result
+                                    anserdCorrectly = true
+                                } else {
+                                    anserdCorrectly = false
                                 }
                             }) {
                                 HStack{
@@ -64,12 +58,11 @@ struct QuizView: View {
                                         .foregroundStyle(Color.secondary)
                                         .padding(20)
                                     Spacer()
-                            
                                 }
                                 .padding(.horizontal, 30)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color.white)
+                                        .foregroundStyle(Color.white)
                                         .shadow(radius: 10)
                                 )
                                 .padding(10)
@@ -78,11 +71,38 @@ struct QuizView: View {
                             .disabled(selectedIndex != nil) //gör att man bara kan svara en gång
                             .animation(.easeInOut(duration: 0.3), value: selectedIndex)
                         }
+                    // visa resultat
+                    
+                    if let anserdCorrectly {
+                        Group {
+                            if anserdCorrectly {
+                                Text("Snyggt! Nr. \(currentQuestion.correctIndex + 1) är rätt")
+                                    .font(.title2)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.green.opacity(0.7))
+                            
+                            } else {
+                                Text("Du svarade nr. \(selectedIndex! + 1) rätt svar var nr. \(currentQuestion.correctIndex + 1)")
+                                    .font(.title2)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.red.opacity(0.7))
+
+                            }
+                        }
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                        .padding(.top, 20)
+                        
+                    }
                     // nästa fråga knapp
                     if selectedIndex != nil {
                         Button {
                             if questionsAsked < maxQuestions {
                                 selectedIndex = nil
+                                anserdCorrectly = nil
                                 questionIndex += 1
                                 questionsAsked += 1
                             } else {
@@ -108,7 +128,6 @@ struct QuizView: View {
                 }
             .padding(20)
             }
-    
 }
 
 #Preview {
