@@ -1,16 +1,16 @@
 //
-//  StartView.swift
+//  SettingsView.swift
 //  QuizApp
 //
-//  Created by Stina Thun on 2026-03-29.
+//  Created by William Albinsson on 2026-04-01.
 //
 
 import SwiftUI
 
-struct QuizStartView: View {
-    @Binding var phase: QuizPhase
-    @Binding var maxQuestions: Int
-    @State private var isShowingSettings = false
+struct SettingsView: View {
+    
+    @Binding var questionAmount: Int
+    @Binding var isShowingSettings: Bool
     
     var body: some View {
         VStack {
@@ -19,35 +19,34 @@ struct QuizStartView: View {
                     .resizable()
                     .frame(width: 200, height: 200)
                 
-                Text("Drink Quiz")
+                Text("Inställningar")
                     .font(.largeTitle.bold())
                     .padding(.bottom, 60)
             }
             .padding(.top, 24)
             
             VStack (spacing: 24){
-                
-                Button {
-                    withAnimation {
-                        phase = .quiz
+                Text("Antal frågor att besvara:")
+                    .bold()
+                Picker("Antal frågor att besvara", selection: $questionAmount) {
+                    ForEach(1 ..< 9) {
+                        Text("\($0) frågor")
+                            .tag($0)
                     }
-                } label: {
-                    Image(systemName: "play.fill")
-                    Text("Start")
                 }
                 .padding()
-                .frame(maxWidth: .infinity)
-                .font(.title3.bold())
+                .frame(maxWidth: .infinity, maxHeight: 56)
                 .background(ButtonGradient.logoGradient)
-                .foregroundStyle(.white)
+                .tint(.white)
                 .cornerRadius(12)
                 .shadow(radius: 4)
+
                 
                 Button {
-                    isShowingSettings = true
+                    isShowingSettings = false
                 } label: {
-                    Image(systemName: "gearshape.fill")
-                    Text("Inställningar")
+                    Image(systemName: "arrowshape.backward.fill")
+                    Text("Tillbaka")
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -72,22 +71,11 @@ struct QuizStartView: View {
                 endPoint: .bottomTrailing
             )
         )
-        .sheet(isPresented: $isShowingSettings) {
-            SettingsView(questionAmount: $maxQuestions, isShowingSettings: $isShowingSettings)
-        }
         
     }
     
 }
 
-struct ButtonGradient {
-    static let logoGradient = LinearGradient(
-        colors: [
-            Color(red: 1.0, green: 0.7, blue: 0.2),
-            Color(red: 0.95, green: 0.1, blue: 0.35)
-        ], startPoint: .top, endPoint: .bottom)
-}
-
 #Preview {
-    QuizStartView(phase: .constant(.start), maxQuestions: .constant(0))
+    SettingsView(questionAmount: .constant(2), isShowingSettings: .constant(true))
 }

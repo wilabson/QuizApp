@@ -10,17 +10,18 @@ import SwiftUI
 struct ContentView: View {
     @State private var phase: QuizPhase = .start
     @State private var finalScore: Int = 0
+    @State private var maxQuestions = 8
 
     var body: some View {
         Group {
             switch phase {
             case .start:
-                QuizStartView(phase: $phase)
+                QuizStartView(phase: $phase, maxQuestions: $maxQuestions)
                     .transition(.scale)
             case .quiz:
-                QuizView(phase: $phase, finalScore: $finalScore)
+                QuizView(phase: $phase, finalScore: $finalScore, maxQuestions: maxQuestions)
             case .result:
-                ResultView(score: finalScore, total: Question.allQuestions.count, phase: $phase)
+                ResultView(score: finalScore, total: maxQuestions, phase: $phase)
             }
         }
     }
