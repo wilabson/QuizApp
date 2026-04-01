@@ -19,7 +19,7 @@ struct QuizView: View {
     @State private var questionsAsked: Int = 1
     @State private var anserdCorrectly: Bool? = nil
     
-    private let maxQuestions: Int = 8
+    let maxQuestions: Int
     private let questions = Question.allQuestions
     private var currentQuestion: Question { questions[questionIndex]}
 
@@ -133,5 +133,5 @@ struct QuizView: View {
 }
 
 #Preview {
-    QuizView(phase: .constant(.quiz), finalScore: .constant(0))
+    QuizView(phase: .constant(.quiz), finalScore: .constant(0), maxQuestions: 8)
 }

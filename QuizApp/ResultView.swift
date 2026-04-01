@@ -5,8 +5,6 @@ struct ResultView: View {
     let total: Int
     @Binding var phase: QuizPhase
 
-    private let quizTotal = 12
-
     var body: some View {
         ZStack {
             LinearGradient(
@@ -34,12 +32,12 @@ struct ResultView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.black)
 
-                Text("Du fick \(score) av \(quizTotal)")
+                Text("Du fick \(score) av \(total)")
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
 
-                if score == quizTotal {
+                if score == total {
 
                     Text("Skål! 🍻")
                         .font(.headline)
@@ -54,7 +52,7 @@ struct ResultView: View {
                         .foregroundColor(.black)
                         .padding(.horizontal, 24)
 
-                } else if score >= quizTotal / 2 {
+                } else if score >= total / 2 {
                     Text("Snyggt jobbat! 👏")
                         .font(.title3)
                         .fontWeight(.semibold)
