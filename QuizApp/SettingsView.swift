@@ -34,6 +34,12 @@ struct SettingsView: View {
                             .tag($0)
                     }
                 }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: 56)
+                .background(ButtonGradient.logoGradient)
+                .tint(.white)
+                .cornerRadius(12)
+                .shadow(radius: 4)
 
                 
                 Button {
