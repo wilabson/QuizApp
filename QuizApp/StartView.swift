@@ -46,7 +46,7 @@ struct QuizStartView: View {
                 Button {
                     isShowingSettings = true
                 } label: {
-                    Image(systemName: "info.circle.fill")
+                    Image(systemName: "gearshape.fill")
                     Text("Inställningar")
                 }
                 .padding()

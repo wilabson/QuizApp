@@ -45,7 +45,7 @@ struct SettingsView: View {
                 Button {
                     isShowingSettings = false
                 } label: {
-                    Image(systemName: "info.circle.fill")
+                    Image(systemName: "arrowshape.backward.fill")
                     Text("Tillbaka")
                 }
                 .padding()
