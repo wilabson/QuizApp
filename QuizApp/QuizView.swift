@@ -18,11 +18,27 @@ struct QuizView: View {
     @State private var selectedIndex: Int? = nil
     @State private var questionsAsked: Int = 1
     @State private var anserdCorrectly: Bool? = nil
+    @State private var anserColor: Color = .white
     
     let maxQuestions: Int
     private let questions = Question.allQuestions
     private var currentQuestion: Question { questions[questionIndex]}
+    
+    private func backgroundColor(for index: Int) -> Color {
+        guard let selectedIndex else {
+            return Color.white.opacity(0.5)
+        }
 
+        if index == currentQuestion.correctIndex {
+            return Color.green.opacity(0.7)
+        }
+
+        if index == selectedIndex {
+            return Color.red.opacity(0.7)
+        }
+
+        return Color.gray.opacity(0.2)
+    }
 
     var body: some View {
             ScrollView {
@@ -45,8 +61,10 @@ struct QuizView: View {
                                 if index == currentQuestion.correctIndex {
                                     self.score += 1
                                     anserdCorrectly = true
+                                    anserColor = Color.green.opacity(0.7)
                                 } else {
                                     anserdCorrectly = false
+                                    anserColor = Color.red.opacity(0.7)
                                 }
                             }) {
                                 HStack{
@@ -62,11 +80,7 @@ struct QuizView: View {
                                 .padding(.horizontal, 30)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .foregroundStyle(
-                                            selectedIndex == nil
-                                                ? Color.white
-                                            : (selectedIndex == index ? Color.white : Color.gray.opacity(0.1))
-                                        )
+                                        .foregroundStyle(backgroundColor(for: index))
                                         .shadow(radius: 10)
                                     
                                 )
@@ -76,35 +90,35 @@ struct QuizView: View {
                             .disabled(selectedIndex != nil) //gör att man bara kan svara en gång
                             .animation(.easeInOut(duration: 1), value: selectedIndex)
                         }
-                    // visa resultat
-                    
-                    if let anserdCorrectly {
-                        Group {
-                            if anserdCorrectly {
-                                Text("Snyggt! Nr. \(currentQuestion.correctIndex + 1) är rätt")
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.green.opacity(0.7))
-                            } else {
-                                Text("Fel! Rätt svar var nr. \(currentQuestion.correctIndex + 1)")
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.red.opacity(0.7))
-                            }
-                        }
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .padding(.top, 20)
-                        
-                    }
+                    // visa resultat "less is more?"
+//                    if let anserdCorrectly {
+//                        Group {
+//                            if anserdCorrectly {
+//                                Text("Snyggt! Nr. \(currentQuestion.correctIndex + 1) är rätt")
+//                                    .padding()
+//                                    .frame(maxWidth: .infinity)
+//                                    .background(anserColor)
+//                            } else {
+//                                Text("Fel! Rätt svar var nr. \(currentQuestion.correctIndex + 1)")
+//                                    .padding()
+//                                    .frame(maxWidth: .infinity)
+//                                    .background(anserColor)
+//                            }
+//                        }
+//                        .font(.title2)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(10)
+//                        .shadow(radius: 10)
+//                        .padding(.top, 20)
+//                        
+//                    }
                     // nästa fråga knapp
                     if selectedIndex != nil {
                         Button {
                             if questionsAsked < maxQuestions {
                                 selectedIndex = nil
                                 anserdCorrectly = nil
+                                anserColor = .white
                                 questionIndex += 1
                                 questionsAsked += 1
                             } else {
@@ -116,7 +130,7 @@ struct QuizView: View {
                                 .font(.title2)
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(Color.purple.opacity(0.9))
+                                .background(ButtonGradient.logoGradient)
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                                 .shadow(radius: 10)
@@ -129,6 +143,16 @@ struct QuizView: View {
                     
                 }
             .padding(20)
+        
+        // TODO: kommentera av för att se färgen i preview
+//            .background(
+//                LinearGradient(
+//                    colors: [
+//                        Color(red: 1.0, green: 0.75, blue: 0.40),
+//                        Color(red: 0.95, green: 0.20, blue: 0.45)
+//                    ],
+//                    startPoint: .topLeading,
+//                    endPoint: .bottomTrailing))
             }
 }
 

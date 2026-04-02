@@ -1,7 +1,89 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld frågor" : {
 
+    },
+    "%lld. " : {
+
+    },
+    "Antal frågor att besvara" : {
+
+    },
+    "Antal frågor att besvara:" : {
+
+    },
+    "Besök bartendern och hämta din gratisdrink." : {
+
+    },
+    "Bra! Försök igen 😊" : {
+
+    },
+    "Drink Quiz" : {
+
+    },
+    "Du fick %lld av %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Du fick %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "Du vann en drink på huset! 🍹" : {
+
+    },
+    "Fel! Rätt svar var nr. %lld" : {
+
+    },
+    "Fråga %lld av %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Fråga %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "Inställningar" : {
+
+    },
+    "Made by Group 5" : {
+
+    },
+    "Nästa fråga" : {
+
+    },
+    "Rätt svar: %lld" : {
+
+    },
+    "Resultat" : {
+
+    },
+    "Se ditt resultat" : {
+
+    },
+    "Skål! 🍻" : {
+
+    },
+    "Snyggt jobbat! 👏" : {
+
+    },
+    "Snyggt! Nr. %lld är rätt" : {
+
+    },
+    "Spela igen" : {
+
+    },
+    "Start" : {
+
+    },
+    "Tillbaka" : {
+
+    }
   },
   "version" : "1.1"
 }

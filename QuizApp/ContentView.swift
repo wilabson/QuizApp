@@ -24,6 +24,14 @@ struct ContentView: View {
                 ResultView(score: finalScore, total: maxQuestions, phase: $phase)
             }
         }
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 1.0, green: 0.75, blue: 0.40),
+                    Color(red: 0.95, green: 0.20, blue: 0.45)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing))
     }
 }
 
