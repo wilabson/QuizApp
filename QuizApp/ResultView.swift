@@ -7,15 +7,8 @@ struct ResultView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 1.0, green: 0.75, blue: 0.40),
-                    Color(red: 0.95, green: 0.20, blue: 0.45)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            BackgroundGradient.backgroundGradient
+                .ignoresSafeArea()
 
             VStack(spacing: 24) {
                 Spacer()
@@ -74,16 +67,7 @@ struct ResultView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: 220)
                         .padding()
-                        .background(
-                            LinearGradient(
-                                colors: [
-                                    Color(red: 1.0, green: 0.7, blue: 0.2),
-                                    Color(red: 0.95, green: 0.1, blue: 0.35)
-                                ],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        )
+                        .background(ButtonGradient.logoGradient)
                         .cornerRadius(14)
                         .shadow(radius: 6)
                 }

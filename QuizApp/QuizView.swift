@@ -13,16 +13,27 @@ struct QuizView: View {
     @Binding var phase: QuizPhase
     @Binding var finalScore: Int
     
-    @State private var questionIndex: Int = Int.random(in: 0..<(Question.allQuestions.count - 8)) // TODO: Är inte jättenöjd med denna lösning
+    @State private var shuffledQuestions: [Question]
     @State private var score: Int = 0
     @State private var selectedIndex: Int? = nil
     @State private var questionsAsked: Int = 1
-    @State private var anserdCorrectly: Bool? = nil
-    @State private var anserColor: Color = .white
+    @State private var answeredCorrectly: Bool? = nil
+    @State private var answerColor: Color = .white
     
     let maxQuestions: Int
     private let questions = Question.allQuestions
-    private var currentQuestion: Question { questions[questionIndex]}
+    private var currentQuestion: Question {
+        shuffledQuestions[questionsAsked - 1]
+    }
+    
+    init(phase: Binding<QuizPhase>, finalScore: Binding<Int>, maxQuestions: Int) {
+        self._phase = phase
+        self._finalScore = finalScore
+        self.maxQuestions = maxQuestions
+        
+        let count = min(maxQuestions, Question.allQuestions.count)
+        self._shuffledQuestions = State(initialValue: Array(Question.allQuestions.shuffled().prefix(count)))
+    }
     
     private func backgroundColor(for index: Int) -> Color {
         guard let selectedIndex else {
@@ -53,18 +64,18 @@ struct QuizView: View {
                         .bold()
                         .padding(10)
                 } // end VStack top
+// MARK: Show answers
                 VStack (alignment: .leading, spacing: 20){
-
                         ForEach(currentQuestion.options.indices, id: \.self) { index in
                             Button(action: {
                                 self.selectedIndex = index
                                 if index == currentQuestion.correctIndex {
                                     self.score += 1
-                                    anserdCorrectly = true
-                                    anserColor = Color.green.opacity(0.7)
+                                    answeredCorrectly = true
+                                    answerColor = Color.green.opacity(0.7)
                                 } else {
-                                    anserdCorrectly = false
-                                    anserColor = Color.red.opacity(0.7)
+                                    answeredCorrectly = false
+                                    answerColor = Color.red.opacity(0.7)
                                 }
                             }) {
                                 HStack{
@@ -87,39 +98,38 @@ struct QuizView: View {
                                 .padding(10)
 
                             }
-                            .disabled(selectedIndex != nil) //gör att man bara kan svara en gång
+                            .disabled(selectedIndex != nil) //you can onley answer onse
                             .animation(.easeInOut(duration: 1), value: selectedIndex)
                         }
-                    // visa resultat "less is more?"
-//                    if let anserdCorrectly {
-//                        Group {
-//                            if anserdCorrectly {
-//                                Text("Snyggt! Nr. \(currentQuestion.correctIndex + 1) är rätt")
-//                                    .padding()
-//                                    .frame(maxWidth: .infinity)
-//                                    .background(anserColor)
-//                            } else {
-//                                Text("Fel! Rätt svar var nr. \(currentQuestion.correctIndex + 1)")
-//                                    .padding()
-//                                    .frame(maxWidth: .infinity)
-//                                    .background(anserColor)
-//                            }
-//                        }
-//                        .font(.title2)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(10)
-//                        .shadow(radius: 10)
-//                        .padding(.top, 20)
-//                        
-//                    }
-                    // nästa fråga knapp
+// MARK: Show result bar
+                    if let answeredCorrectly {
+                        Group {
+                            if answeredCorrectly {
+                                Text("Snyggt! Nr. \(currentQuestion.correctIndex + 1) är rätt")
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(answerColor)
+                            } else {
+                                Text("Fel! Rätt svar var nr. \(currentQuestion.correctIndex + 1)")
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(answerColor)
+                            }
+                        }
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                        .padding(.top, 20)
+                        
+                    }
+// MARK: Next question button
                     if selectedIndex != nil {
                         Button {
                             if questionsAsked < maxQuestions {
                                 selectedIndex = nil
-                                anserdCorrectly = nil
-                                anserColor = .white
-                                questionIndex += 1
+                                answeredCorrectly = nil
+                                answerColor = .white
                                 questionsAsked += 1
                             } else {
                                 finalScore = score
@@ -134,25 +144,14 @@ struct QuizView: View {
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                                 .shadow(radius: 10)
-                                
                         }
-
                     }
                     } // end VStack questions
-                
-                    
                 }
             .padding(20)
         
-        // TODO: kommentera av för att se färgen i preview
-//            .background(
-//                LinearGradient(
-//                    colors: [
-//                        Color(red: 1.0, green: 0.75, blue: 0.40),
-//                        Color(red: 0.95, green: 0.20, blue: 0.45)
-//                    ],
-//                    startPoint: .topLeading,
-//                    endPoint: .bottomTrailing))
+//MARK: Comment out to see color in preview
+//            .background(BackgroundGradient.backgroundGradient)
             }
 }
 

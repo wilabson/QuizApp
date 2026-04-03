@@ -29,7 +29,7 @@ struct SettingsView: View {
                 Text("Antal frågor att besvara:")
                     .bold()
                 Picker("Antal frågor att besvara", selection: $questionAmount) {
-                    ForEach(1 ..< 9) {
+                    ForEach(1 ..< Question.allQuestions.count, id: \.self) {
                         Text("\($0) frågor")
                             .tag($0)
                     }
@@ -61,16 +61,7 @@ struct SettingsView: View {
             .padding(.horizontal, 100)
             Text("Made by Group 5")
         }
-        .background(
-            LinearGradient(
-                colors: [
-                    Color(red: 1.0, green: 0.75, blue: 0.40),
-                    Color(red: 0.95, green: 0.20, blue: 0.45)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
+        .background(BackgroundGradient.backgroundGradient)
         
     }
     
