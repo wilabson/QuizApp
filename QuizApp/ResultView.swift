@@ -13,7 +13,7 @@ struct ResultView: View {
             VStack(spacing: 24) {
                 Spacer()
 
-                Image(systemName: "checkmark.seal.fill")
+                Image(systemName: score == total ? "trophy.fill" : score >= total / 2 ? "hand.thumbsup.fill" : "arrow.clockwise.circle.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 85, height: 85)
@@ -32,11 +32,7 @@ struct ResultView: View {
 
                 if score == total {
 
-                    Text("Skål! 🍻")
-                        .font(.headline)
-                        .foregroundColor(.black)
-
-                    Text("Du vann en drink på huset! 🍹")
+                    Label("Du vann en drink på huset!", systemImage: "gift.fill")
                         .font(.headline)
                         .foregroundColor(.black)
 
@@ -46,13 +42,13 @@ struct ResultView: View {
                         .padding(.horizontal, 24)
 
                 } else if score >= total / 2 {
-                    Text("Snyggt jobbat! 👏")
+                    Label("Snyggt jobbat!", systemImage: "hand.thumbsup.fill")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(.black)
 
                 } else {
-                    Text("Bra! Försök igen 😊")
+                    Label("Bra! Försök igen", systemImage: "arrow.clockwise")
                         .font(.title3)
                         .fontWeight(.medium)
                         .foregroundColor(.black)
