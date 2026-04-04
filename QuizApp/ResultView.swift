@@ -4,6 +4,8 @@ struct ResultView: View {
     let score: Int
     let total: Int
     @Binding var phase: QuizPhase
+    
+    @AppStorage("highScore") var highScore = 0
 
     var body: some View {
         ZStack {
@@ -13,12 +15,16 @@ struct ResultView: View {
             VStack(spacing: 24) {
                 Spacer()
 
-                Image(systemName: score == total ? "trophy.fill" : score >= total / 2 ? "hand.thumbsup.fill" : "arrow.clockwise.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 85, height: 85)
-                    .foregroundStyle(.white.opacity(0.95))
-                    .shadow(radius: 6)
+                Image(systemName:
+                        score == total ? "trophy.fill" :
+                        score >= total / 2 ? "hand.thumbsup.fill" :
+                        "arrow.clockwise.circle.fill"
+                )
+                .resizable()
+                .scaledToFit()
+                .frame(width: 85, height: 85)
+                .foregroundStyle(.white.opacity(0.95))
+                .shadow(radius: 6)
 
                 Text("Resultat")
                     .font(.largeTitle)
@@ -29,6 +35,10 @@ struct ResultView: View {
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
+
+                Text("Högsta poäng: \(highScore)")
+                    .font(.subheadline)
+                    .foregroundColor(.black.opacity(0.8))
 
                 if score == total {
 
@@ -77,6 +87,11 @@ struct ResultView: View {
                     .padding(.bottom, 20)
             }
             .padding()
+        }
+        .onAppear {
+            if score > highScore {
+                highScore = score
+            }
         }
     }
 }
