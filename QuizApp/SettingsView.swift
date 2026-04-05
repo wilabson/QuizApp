@@ -30,8 +30,14 @@ struct SettingsView: View {
                     .bold()
                 Picker("Antal frågor att besvara", selection: $questionAmount) {
                     ForEach(1 ..< Question.allQuestions.count, id: \.self) {
-                        Text("\($0) frågor")
-                            .tag($0)
+                        
+                        if $0 == 1 {
+                            Text("\($0) fråga")
+                                .tag($0)
+                        } else {
+                            Text("\($0) frågor")
+                                .tag($0)
+                        }
                     }
                 }
                 .padding()
