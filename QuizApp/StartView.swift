@@ -72,16 +72,6 @@ struct QuizStartView: View {
     
 }
 
-
-
-struct ButtonGradient {
-    static let logoGradient = LinearGradient(
-        colors: [
-            Color(red: 1.0, green: 0.7, blue: 0.2),
-            Color(red: 0.95, green: 0.1, blue: 0.35)
-        ], startPoint: .top, endPoint: .bottom)
-}
-
 #Preview {
     QuizStartView(phase: .constant(.start), maxQuestions: .constant(0))
 }
