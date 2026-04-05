@@ -4,6 +4,8 @@ struct ResultView: View {
     let score: Int
     let total: Int
     @Binding var phase: QuizPhase
+    
+    @AppStorage("highScore") var highScore = 0
 
     var body: some View {
         ZStack {
@@ -13,12 +15,16 @@ struct ResultView: View {
             VStack(spacing: 24) {
                 Spacer()
 
-                Image(systemName: "checkmark.seal.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 85, height: 85)
-                    .foregroundStyle(.white.opacity(0.95))
-                    .shadow(radius: 6)
+                Image(systemName:
+                        score == total ? "trophy.fill" :
+                        score >= total / 2 ? "hand.thumbsup.fill" :
+                        "arrow.clockwise.circle.fill"
+                )
+                .resizable()
+                .scaledToFit()
+                .frame(width: 85, height: 85)
+                .foregroundStyle(.white.opacity(0.95))
+                .shadow(radius: 6)
 
                 Text("Resultat")
                     .font(.largeTitle)
@@ -30,13 +36,13 @@ struct ResultView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
 
+                Text("Högsta poäng: \(highScore)")
+                    .font(.subheadline)
+                    .foregroundColor(.black.opacity(0.8))
+
                 if score == total {
 
-                    Text("Skål! 🍻")
-                        .font(.headline)
-                        .foregroundColor(.black)
-
-                    Text("Du vann en drink på huset! 🍹")
+                    Label("Du vann en drink på huset!", systemImage: "gift.fill")
                         .font(.headline)
                         .foregroundColor(.black)
 
@@ -46,13 +52,13 @@ struct ResultView: View {
                         .padding(.horizontal, 24)
 
                 } else if score >= total / 2 {
-                    Text("Snyggt jobbat! 👏")
+                    Label("Snyggt jobbat!", systemImage: "hand.thumbsup.fill")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(.black)
 
                 } else {
-                    Text("Bra! Försök igen 😊")
+                    Label("Bra! Försök igen", systemImage: "arrow.clockwise")
                         .font(.title3)
                         .fontWeight(.medium)
                         .foregroundColor(.black)
@@ -81,6 +87,11 @@ struct ResultView: View {
                     .padding(.bottom, 20)
             }
             .padding()
+        }
+        .onAppear {
+            if score > highScore {
+                highScore = score
+            }
         }
     }
 }
