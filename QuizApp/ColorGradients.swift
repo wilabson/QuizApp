@@ -1,9 +1,10 @@
 //
-//  BackgroundGradient.swift
+//  ColorGradients.swift
 //  QuizApp
 //
-//  Created by Stina Thun on 2026-04-02.
+//  Created by William Albinsson on 2026-04-05.
 //
+
 import SwiftUI
 
 struct BackgroundGradient {
@@ -15,4 +16,12 @@ struct BackgroundGradient {
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
+}
+
+struct ButtonGradient {
+    static let logoGradient = LinearGradient(
+        colors: [
+            Color(red: 1.0, green: 0.7, blue: 0.2),
+            Color(red: 0.95, green: 0.1, blue: 0.35)
+        ], startPoint: .top, endPoint: .bottom)
 }
